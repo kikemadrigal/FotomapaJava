@@ -1,4 +1,4 @@
-package es.tipolisto.fotomapajava;
+package es.tipolisto.fotomapajava.Entidades;
 
 import com.google.gson.annotations.Expose;
 

@@ -1,4 +1,6 @@
-package es.tipolisto.fotomapajava;
+package es.tipolisto.fotomapajava.Entidades;
+
+import es.tipolisto.fotomapajava.Entidades.City;
 
 public class ForeCast {
     private String cod;

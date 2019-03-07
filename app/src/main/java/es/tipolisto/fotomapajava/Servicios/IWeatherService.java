@@ -1,5 +1,6 @@
-package es.tipolisto.fotomapajava;
+package es.tipolisto.fotomapajava.Servicios;
 
+import es.tipolisto.fotomapajava.Entidades.ForeCast;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
