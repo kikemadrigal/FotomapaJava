@@ -15,6 +15,6 @@ public interface IUserService {
     @GET("show/15")
     Call<User> getuser();
     //Fomar 2
-    @GET("show")
-    Call<User> getUsusuario(@Query("idusuario") int idusuario);
+    @GET("show/{idusuario}")
+    Call<User> getUsusuario(@Path("idusuario") int idusuario);
 }
