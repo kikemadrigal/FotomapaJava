@@ -1,5 +1,8 @@
 package es.tipolisto.fotomapajava;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 
 import es.tipolisto.fotomapajava.Entidades.ForeCast;
 import es.tipolisto.fotomapajava.Entidades.UsuarioRespuesta;
+import es.tipolisto.fotomapajava.Fragments.Mapa.MapActivity;
 import es.tipolisto.fotomapajava.Servicios.IUserService;
 import es.tipolisto.fotomapajava.Servicios.IWeatherService;
 import es.tipolisto.fotomapajava.Utilidades.Constantes;
@@ -46,6 +50,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Button botonLoginActivity=findViewById(R.id.buttonLoginActivity);
         botonLoginActivity.setOnClickListener(this);
+
+        //cambiardeActivity(MapActivity.class);
+
     }
 
 
@@ -56,13 +63,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         boolean nombreEstaVacio= Funciones.comprobarCamposVacíos(editTextNombreUsuario.getText().toString());
         boolean contraseñaVacia=Funciones.comprobarCamposVacíos(editTextPasswordusuario.getText().toString());
 
-        if(nombreEstaVacio){
+        /*if(nombreEstaVacio){
             Toast.makeText(this, "El nombre no puede estar vacío", Toast.LENGTH_LONG).show();
         }else if(contraseñaVacia){
             Toast.makeText(this, "La contraseña no puede estar vacía", Toast.LENGTH_LONG).show();
-        }else{
+        }else{*/
             crearRetroFit();
-        }
+        //}
     }
 
 
@@ -82,6 +89,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onResponse(Call<UsuarioRespuesta> call, Response<UsuarioRespuesta> response) {
                 UsuarioRespuesta usuarioRespuesta=response.body();
                 Toast.makeText(LoginActivity.this, "bien", Toast.LENGTH_SHORT).show();
+                cambiardeActivity(MainActivity.class);
             }
 
             @Override
@@ -99,5 +107,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 comprobarLoginUsuario();
                 break;
         }
+    }
+
+
+    private void cambiardeActivity(Class clase){
+        Intent intent=new Intent(LoginActivity.this, clase);
+        startActivity(intent);
+        finish();
     }
 }

@@ -1,5 +1,6 @@
 package es.tipolisto.fotomapajava;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,20 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import es.tipolisto.fotomapajava.Entidades.ForeCast;
 import es.tipolisto.fotomapajava.Entidades.Foto;
-import es.tipolisto.fotomapajava.Entidades.User;
 import es.tipolisto.fotomapajava.Fragments.Fotos.MenuPrincipalFotosFragment;
+import es.tipolisto.fotomapajava.Fragments.Mapa.MapActivity;
 import es.tipolisto.fotomapajava.Fragments.Mapa.MenuPrincipalMapaFragment;
 import es.tipolisto.fotomapajava.Fragments.MenuPrincipal.MenuPricipalFragment;
 import es.tipolisto.fotomapajava.Fragments.Usuarios.MenuPrincipalUsuariosFragment;
 import es.tipolisto.fotomapajava.Servicios.IFotoMapaService;
-import es.tipolisto.fotomapajava.Servicios.IUserService;
 import es.tipolisto.fotomapajava.Servicios.IWeatherService;
 import es.tipolisto.fotomapajava.Utilidades.Constantes;
 import retrofit2.Call;
@@ -70,12 +69,17 @@ public class MainActivity extends AppCompatActivity
 
 
 
+        //Esto lo hacemos para detectar que salga elmenu principalcuando sea la primeravez que se carga
+        //Sino pusiermos el if al cambiar la rotación de la pantalla cambiaríaal menuprincipal
+        if(savedInstanceState==null){
+            cambiarDeFragment(new MenuPricipalFragment());
+        }
 
-        //apiRetrofitFotoMapa();
 
-        cambiarDeFragment(new MenuPricipalFragment());
 
         mainActivity=this;
+
+        Toast.makeText(mainActivity, "Ha vuelto a MainActivity create", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -122,6 +126,9 @@ public class MainActivity extends AppCompatActivity
             cambiarDeFragment(new MenuPrincipalFotosFragment());
         } else if (id == R.id.nav_mapa) {
             cambiarDeFragment(new MenuPrincipalMapaFragment());
+            /*Intent intent=new Intent(MainActivity.this, MapActivity.class);
+            startActivity(intent);
+            finish();*/
         } else if (id == R.id.nav_usuarios) {
             cambiarDeFragment(new MenuPrincipalUsuariosFragment());
         } else if (id == R.id.nav_send) {
