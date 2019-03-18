@@ -7,6 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.JsonIOException;
@@ -14,15 +17,23 @@ import com.google.gson.JsonIOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import es.tipolisto.fotomapajava.Entidades.City;
+import es.tipolisto.fotomapajava.Entidades.Foto;
+import es.tipolisto.fotomapajava.Fragments.Fotos.MenurincipalFotosFragmentAdapter;
 import es.tipolisto.fotomapajava.R;
+import es.tipolisto.fotomapajava.Servicios.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MenuPricipalFragment extends Fragment {
+public class MenuPricipalFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-
+    private ListView listView;
     public MenuPricipalFragment() {
         // Required empty public constructor
     }
@@ -32,19 +43,30 @@ public class MenuPricipalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_menu_pricipal, container, false);
+        listView=view.findViewById(R.id.listViewMenuPrincipal);
+        listView.setOnItemClickListener(this);
 
-        String json="{id:1,name:'london'}";
-        try{
-            JSONObject jsonObject=new JSONObject();
-            int id=jsonObject.getInt("id");
-            String name=jsonObject.getString("name");
-            City city=new City(id, name);
-            Toast.makeText(getContext(), "Ciudad: id"+city.getId()+", nombre: "+city.getName(), Toast.LENGTH_SHORT).show();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.d("mensaje", "menu principal cargado");
+        Call<List<Foto>> callFotos= RetrofitClient.getService().getFotos();
+        callFotos.enqueue(new Callback<List<Foto>>() {
+            @Override
+            public void onResponse(Call<List<Foto>> call, Response<List<Foto>> response) {
+                MenuPrincipalAdapter menuPrincipalAdapter=new MenuPrincipalAdapter(getContext(), response.body());
+                listView.setAdapter(menuPrincipalAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Foto>> call, Throwable t) {
+                Toast.makeText(getContext(), "Ups, algo ha ido mal", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Foto foto=(Foto)parent.getItemAtPosition(position);
+        Toast.makeText(getContext(), "Bien"+foto.getName(), Toast.LENGTH_SHORT).show();
+    }
 }

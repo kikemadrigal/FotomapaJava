@@ -9,7 +9,7 @@ public class Constantes {
     /**
      * Fotomapa
      */
-    public static final String BASE_URL_FOTMAPA="https://fotomapa.es/apa/";
+    public static final String BASE_URL_FOTMAPA="https://fotomapa.es/api/";
 
 
     /**

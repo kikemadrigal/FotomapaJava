@@ -46,7 +46,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import es.tipolisto.fotomapajava.Entidades.Foto;
 import es.tipolisto.fotomapajava.R;
+import es.tipolisto.fotomapajava.Servicios.RetrofitClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -136,6 +141,27 @@ public class MenuPrincipalMapaFragment extends Fragment implements OnMapReadyCal
 
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 10, this);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+
+
+        ponerMarcadoresEnMapa();
+    }
+
+    private void ponerMarcadoresEnMapa() {
+        Call<List<Foto>> callGetFotos= RetrofitClient.getService().getFotos();
+        callGetFotos.enqueue(new Callback<List<Foto>>() {
+            @Override
+            public void onResponse(Call<List<Foto>> call, Response<List<Foto>> response) {
+                List<Foto> fotos=response.body();
+                for(Foto foto : fotos){
+                    mapa.addMarker(new MarkerOptions().position(new LatLng(foto.getLat(),foto.getLng())).title(foto.getName()).draggable(true));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Foto>> call, Throwable t) {
+
+            }
+        });
 
     }
 

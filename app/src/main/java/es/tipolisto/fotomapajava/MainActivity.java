@@ -170,38 +170,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private void apiRetrofitFotoMapa(){
-        //Preparamos la instancia de retrofit
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL_FOTMAPA)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        //Creamos una clase que implemente la instancia del servicio
-        IFotoMapaService iFotoMapaService=retrofit.create(IFotoMapaService.class);
 
-        //Preparamos la petición o la Request pero todavía no lo hemos ejecutado
-        Call callGetFotos=iFotoMapaService.getFotos();
-
-        //Para ejecutarlo:
-        callGetFotos.enqueue(new Callback<List<Foto>>() {
-            @Override
-            public void onResponse(Call<List<Foto>> call, Response<List<Foto>> response) {
-                List<Foto> fotos=response.body();
-                for(Foto foto : fotos){
-                    String textoFotos="";
-                    textoFotos+=foto.getTexto();
-                    //Log.d
-                    //textView.setText(textoFotos);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Foto>> call, Throwable t) {
-                    //textView.setText("Hubo un error");
-            }
-        });
-    }
 
 
 
