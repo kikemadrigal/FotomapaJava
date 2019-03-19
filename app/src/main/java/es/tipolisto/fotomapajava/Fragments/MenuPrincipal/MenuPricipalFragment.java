@@ -1,6 +1,7 @@
 package es.tipolisto.fotomapajava.Fragments.MenuPrincipal;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,6 +23,8 @@ import java.util.List;
 import es.tipolisto.fotomapajava.Entidades.City;
 import es.tipolisto.fotomapajava.Entidades.Foto;
 import es.tipolisto.fotomapajava.Fragments.Fotos.MenurincipalFotosFragmentAdapter;
+import es.tipolisto.fotomapajava.Fragments.Fotos.MostrarFotoFragment;
+import es.tipolisto.fotomapajava.MainActivity;
 import es.tipolisto.fotomapajava.R;
 import es.tipolisto.fotomapajava.Servicios.RetrofitClient;
 import retrofit2.Call;
@@ -67,6 +70,9 @@ public class MenuPricipalFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Foto foto=(Foto)parent.getItemAtPosition(position);
-        Toast.makeText(getContext(), "Bien"+foto.getName(), Toast.LENGTH_SHORT).show();
+        MostrarFotoFragment mostrarFotoFragment=new MostrarFotoFragment();
+        mostrarFotoFragment.setFoto(foto);
+        MainActivity.getInstance().cambiarDeFragment(mostrarFotoFragment);
+       // Toast.makeText(getContext(), "Bien"+foto.getName(), Toast.LENGTH_SHORT).show();
     }
 }

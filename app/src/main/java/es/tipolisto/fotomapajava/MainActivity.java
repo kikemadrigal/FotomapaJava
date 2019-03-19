@@ -35,8 +35,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private MainActivity mainActivity;
-    public MainActivity getInstance(){
+    private static MainActivity mainActivity;
+    public static MainActivity getInstance(){
         if(mainActivity==null){
             mainActivity=new MainActivity();
         }
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
 
         mainActivity=this;
 
-        Toast.makeText(mainActivity, "Ha vuelto a MainActivity create", Toast.LENGTH_LONG).show();
+        //Toast.makeText(mainActivity, "Ha vuelto a MainActivity create", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    private void cambiarDeFragment(Fragment fragment){
+    public void cambiarDeFragment(Fragment fragment){
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.contentMainAppBarActivityMain,fragment);

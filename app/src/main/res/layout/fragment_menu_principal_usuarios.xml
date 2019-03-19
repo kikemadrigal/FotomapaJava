@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:id="@+id/textViewFragmentmenuPrincipalUsuarios"
         android:text="Estas en usuarios"
-        android:gravity="center"
-        android:textSize="48dp"/>
+
+        android:textSize="12dp"/>
 
 </FrameLayout>

@@ -1,135 +1,146 @@
 package es.tipolisto.fotomapajava.Entidades;
 
 public class User {
-    private int idusuario;
-    private String nombreusuario;
-    private String claveusuario;
-    private String tipousuario;
-    private String correousuario;
-    private String nombreRealusuario;
-    private String apellidosusuario;
-    private String webusuario;
-    private String validadousuario;
-    private String fechausuario;
-    private String datosusuario;
-    public User(){}
+    private int id;
+    private String nombre;
+    private String clave;
+    private String tipo;
+    private String correo;
+    private String nombrereal;
+    private String apellidos;
+    private String web;
+    private int validado;
+    private int contador;
+    private String fecha;
+    private String datos;
 
-    public User(int idusuario, String nombreusuario, String claveusuario, String tipousuario, String correousuario, String nombreRealusuario, String apellidosusuario, String webusuario, String validadousuario, String fechausuario, String datosusuario) {
-        this.idusuario = idusuario;
-        this.nombreusuario = nombreusuario;
-        this.claveusuario = claveusuario;
-        this.tipousuario = tipousuario;
-        this.correousuario = correousuario;
-        this.nombreRealusuario = nombreRealusuario;
-        this.apellidosusuario = apellidosusuario;
-        this.webusuario = webusuario;
-        this.validadousuario = validadousuario;
-        this.fechausuario = fechausuario;
-        this.datosusuario = datosusuario;
+    public User(int id, String nombre, String clave, String tipo, String correo, String nombrereal, String apellidos, String web, int validado, int contador, String fecha, String datos) {
+        this.id = id;
+        this.nombre = nombre;
+        this.clave = clave;
+        this.tipo = tipo;
+        this.correo = correo;
+        this.nombrereal = nombrereal;
+        this.apellidos = apellidos;
+        this.web = web;
+        this.validado = validado;
+        this.contador = contador;
+        this.fecha = fecha;
+        this.datos = datos;
     }
 
-    public int getIdusuario() {
-        return idusuario;
+    public int getId() {
+        return id;
     }
 
-    public void setIdusuario(int idusuario) {
-        this.idusuario = idusuario;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getNombreusuario() {
-        return nombreusuario;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreusuario(String nombreusuario) {
-        this.nombreusuario = nombreusuario;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getClaveusuario() {
-        return claveusuario;
+    public String getClave() {
+        return clave;
     }
 
-    public void setClaveusuario(String claveusuario) {
-        this.claveusuario = claveusuario;
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 
-    public String getTipousuario() {
-        return tipousuario;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipousuario(String tipousuario) {
-        this.tipousuario = tipousuario;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public String getCorreousuario() {
-        return correousuario;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setCorreousuario(String correousuario) {
-        this.correousuario = correousuario;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public String getNombreRealusuario() {
-        return nombreRealusuario;
+    public String getNombrereal() {
+        return nombrereal;
     }
 
-    public void setNombreRealusuario(String nombreRealusuario) {
-        this.nombreRealusuario = nombreRealusuario;
+    public void setNombrereal(String nombrereal) {
+        this.nombrereal = nombrereal;
     }
 
-    public String getApellidosusuario() {
-        return apellidosusuario;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setApellidosusuario(String apellidosusuario) {
-        this.apellidosusuario = apellidosusuario;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public String getWebusuario() {
-        return webusuario;
+    public String getWeb() {
+        return web;
     }
 
-    public void setWebusuario(String webusuario) {
-        this.webusuario = webusuario;
+    public void setWeb(String web) {
+        this.web = web;
     }
 
-    public String getValidadousuario() {
-        return validadousuario;
+    public int getValidado() {
+        return validado;
     }
 
-    public void setValidadousuario(String validadousuario) {
-        this.validadousuario = validadousuario;
+    public void setValidado(int validado) {
+        this.validado = validado;
     }
 
-    public String getFechausuario() {
-        return fechausuario;
+    public int getContador() {
+        return contador;
     }
 
-    public void setFechausuario(String fechausuario) {
-        this.fechausuario = fechausuario;
+    public void setContador(int contador) {
+        this.contador = contador;
     }
 
-    public String getDatosusuario() {
-        return datosusuario;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setDatosusuario(String datosusuario) {
-        this.datosusuario = datosusuario;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
+
+    public String getDatos() {
+        return datos;
+    }
+
+    public void setDatos(String datos) {
+        this.datos = datos;
+    }
+
 
     @Override
     public String toString() {
         return "User{" +
-                "idusuario=" + idusuario +
-                ", nombreusuario='" + nombreusuario + '\'' +
-                ", claveusuario='" + claveusuario + '\'' +
-                ", tipousuario='" + tipousuario + '\'' +
-                ", correousuario='" + correousuario + '\'' +
-                ", nombreRealusuario='" + nombreRealusuario + '\'' +
-                ", apellidosusuario='" + apellidosusuario + '\'' +
-                ", webusuario='" + webusuario + '\'' +
-                ", validadousuario='" + validadousuario + '\'' +
-                ", fechausuario='" + fechausuario + '\'' +
-                ", datosusuario='" + datosusuario + '\'' +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", clave='" + clave + '\'' +
+                ", tipo='" + tipo + '\'' +
+                ", correo='" + correo + '\'' +
+                ", nombrereal='" + nombrereal + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", web='" + web + '\'' +
+                ", validado=" + validado +
+                ", contador=" + contador +
+                ", fecha='" + fecha + '\'' +
+                ", datos='" + datos + '\'' +
                 '}';
     }
 }

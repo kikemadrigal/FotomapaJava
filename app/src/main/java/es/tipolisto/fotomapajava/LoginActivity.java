@@ -8,16 +8,19 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import es.tipolisto.fotomapajava.Entidades.ForeCast;
+import es.tipolisto.fotomapajava.Entidades.User;
 import es.tipolisto.fotomapajava.Entidades.UsuarioRespuesta;
 import es.tipolisto.fotomapajava.Fragments.Mapa.MapActivity;
 import es.tipolisto.fotomapajava.Servicios.IUserService;
 import es.tipolisto.fotomapajava.Servicios.IWeatherService;
+import es.tipolisto.fotomapajava.Servicios.RetrofitClient;
 import es.tipolisto.fotomapajava.Utilidades.Constantes;
 import es.tipolisto.fotomapajava.Utilidades.Funciones;
 import retrofit2.Call;
@@ -60,15 +63,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void comprobarLoginUsuario(){
         //Validamos los campos
 
-        boolean nombreEstaVacio= Funciones.comprobarCamposVacíos(editTextNombreUsuario.getText().toString());
-        boolean contraseñaVacia=Funciones.comprobarCamposVacíos(editTextPasswordusuario.getText().toString());
+       // boolean nombreEstaVacio= Funciones.comprobarCamposVacíos(editTextNombreUsuario.getText().toString());
+       // boolean contraseñaVacia=Funciones.comprobarCamposVacíos(editTextPasswordusuario.getText().toString());
 
         /*if(nombreEstaVacio){
             Toast.makeText(this, "El nombre no puede estar vacío", Toast.LENGTH_LONG).show();
         }else if(contraseñaVacia){
             Toast.makeText(this, "La contraseña no puede estar vacía", Toast.LENGTH_LONG).show();
         }else{*/
-            crearRetroFit();
+            //crearRetroFit();
         //}
     }
 
@@ -104,7 +107,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
        // Toast.makeText(this, "Click", Toast.LENGTH_SHORT).show();
         switch (v.getId()){
             case R.id.buttonLoginActivity:
-                comprobarLoginUsuario();
+                Call<String> callUserLogin= RetrofitClient.getService().login(editTextNombreUsuario.getText().toString(), editTextPasswordusuario.getText().toString());
+
+                callUserLogin.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if(response.body()==null){
+                            Toast.makeText(LoginActivity.this, "Introduzaca un texto", Toast.LENGTH_SHORT).show();
+                        }else{
+                            if(response.body().equalsIgnoreCase("kike")){
+                                cambiardeActivity(MainActivity.class);
+                            }
+                            Log.d("Mensaje", "bien-->"+response.body());
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        Log.d("Mensaje", "mal");
+                    }
+                });
                 break;
         }
     }
