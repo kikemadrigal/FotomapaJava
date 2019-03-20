@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import retrofit2.Response;
 public class MenuPricipalFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private ListView listView;
+    private GridView gridView;
     public MenuPricipalFragment() {
         // Required empty public constructor
     }
@@ -46,15 +48,19 @@ public class MenuPricipalFragment extends Fragment implements AdapterView.OnItem
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_menu_pricipal, container, false);
-        listView=view.findViewById(R.id.listViewMenuPrincipal);
-        listView.setOnItemClickListener(this);
+        //listView=view.findViewById(R.id.listViewMenuPrincipal);
+        //listView.setOnItemClickListener(this);
+        gridView=view.findViewById(R.id.gridViwew);
+        gridView.setOnItemClickListener(this);
+        registerForContextMenu(gridView);
 
         Call<List<Foto>> callFotos= RetrofitClient.getService().getFotos();
         callFotos.enqueue(new Callback<List<Foto>>() {
             @Override
             public void onResponse(Call<List<Foto>> call, Response<List<Foto>> response) {
                 MenuPrincipalAdapter menuPrincipalAdapter=new MenuPrincipalAdapter(getContext(), response.body());
-                listView.setAdapter(menuPrincipalAdapter);
+                //listView.setAdapter(menuPrincipalAdapter);
+                gridView.setAdapter(menuPrincipalAdapter);
             }
 
             @Override
@@ -75,4 +81,6 @@ public class MenuPricipalFragment extends Fragment implements AdapterView.OnItem
         MainActivity.getInstance().cambiarDeFragment(mostrarFotoFragment);
        // Toast.makeText(getContext(), "Bien"+foto.getName(), Toast.LENGTH_SHORT).show();
     }
+
+
 }

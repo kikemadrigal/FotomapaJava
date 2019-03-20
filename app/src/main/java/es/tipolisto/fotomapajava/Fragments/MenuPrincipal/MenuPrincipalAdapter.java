@@ -41,20 +41,38 @@ public class MenuPrincipalAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
+        if(convertView==null){
+            //Inflamos nuestra vista
+            convertView=layoutInflater.inflate(R.layout.item_para_grid_view_menu_principal_adapter, null);
+            viewHolder=new ViewHolder();
+            viewHolder.imagen=convertView.findViewById(R.id.imageViewItemMenuPrincipalFragment);
+            viewHolder.texto=convertView.findViewById(R.id.textView1ItemMenuPrincipalFragment);
+            viewHolder.otrosDatos=convertView.findViewById(R.id.textView2ItemMenuPrincipalFragment);
+            convertView.setTag(viewHolder);
+        }else{
+            viewHolder=(ViewHolder)convertView.getTag();
+        }
+
         Foto foto=fotos.get(position);
         String url="https://fotomapa.es/resources/imagesusers/"+foto.getUser()+"/"+foto.getName();
 
-        convertView=layoutInflater.inflate(R.layout.item_menu_principal_adapter, null);
-        ImageView imageView=convertView.findViewById(R.id.imageViewItemMenuPrincipalFragment);
         Picasso.get()
                 .load(url)
                 .resize(50, 50)
                 .centerCrop()
-                .into(imageView);
-        TextView textView1=convertView.findViewById(R.id.textView1ItemMenuPrincipalFragment);
-        textView1.setText(foto.getName());
-        TextView textView2=convertView.findViewById(R.id.textView2ItemMenuPrincipalFragment);
-        textView2.setText(foto.getText());
+                .into(viewHolder.imagen);
+
+        viewHolder.texto.setText(foto.getName());
+        viewHolder.otrosDatos.setText(foto.getText());
         return convertView;
+    }
+    /**
+     * Patrón View Holder Patern -vista poseedora modelo
+     */
+    static class ViewHolder{
+        private ImageView imagen;
+        private TextView texto;
+        private TextView otrosDatos;
     }
 }

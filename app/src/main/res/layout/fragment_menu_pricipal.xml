@@ -15,10 +15,21 @@
         android:textSize="16dp"
         android:textStyle="bold" />
 
-    <ListView
+    <!--<ListView
         android:id="@+id/listViewMenuPrincipal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/textViewMenuPrincipal"></ListView>
-
+        android:layout_below="@id/textViewMenuPrincipal"></ListView>-->
+    <GridView
+        android:id="@+id/gridViwew"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textViewMenuPrincipal"
+        android:columnWidth="90dp"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        android:numColumns="auto_fit"
+        android:gravity="center"
+        android:stretchMode="columnWidth"
+        ></GridView>
 </RelativeLayout>
