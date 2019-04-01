@@ -1,6 +1,8 @@
 package es.tipolisto.fotomapajava.Fragments.Fotos;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -59,4 +61,6 @@ public class MenurincipalFotosFragmentAdapter extends BaseAdapter {
         textView2.setText(foto.getText());
         return convertView;
     }
+
+
 }

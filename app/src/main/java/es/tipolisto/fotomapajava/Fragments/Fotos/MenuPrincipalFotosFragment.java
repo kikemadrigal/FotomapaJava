@@ -1,6 +1,7 @@
 package es.tipolisto.fotomapajava.Fragments.Fotos;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -70,4 +71,10 @@ public class MenuPrincipalFotosFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("Mensaje", "Se han recibido datos en ;emiPrincipalFotosFragment");
+
+    }
 }

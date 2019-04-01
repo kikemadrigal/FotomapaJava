@@ -23,13 +23,13 @@
 
 
 
-    <TextView
-        android:id="@+id/textViewTextoCrearFotoFragment"
+    <EditText
+        android:id="@+id/EditTextTextoCrearFotoFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:gravity="center_horizontal"
-        android:text="Texto de la foto" />
+        android:hint="Introduce aquí lo que quieres decir"/>
 
     <TextView
         android:id="@+id/textViewOtrosDatosFotoFragment"
@@ -47,7 +47,7 @@
             android:id="@+id/buttonCrearFotoFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="crear"/>
+            android:text="Guardar"/>
         <Button
             android:id="@+id/buttonVolverFotoFragment"
             android:layout_width="wrap_content"

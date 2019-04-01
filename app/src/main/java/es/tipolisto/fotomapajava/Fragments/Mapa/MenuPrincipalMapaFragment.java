@@ -1,52 +1,43 @@
 package es.tipolisto.fotomapajava.Fragments.Mapa;
 
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.actions.NoteIntents;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import es.tipolisto.fotomapajava.Entidades.Foto;
+import es.tipolisto.fotomapajava.MainActivity;
 import es.tipolisto.fotomapajava.R;
 import es.tipolisto.fotomapajava.Servicios.RetrofitClient;
 import retrofit2.Call;
@@ -66,6 +57,11 @@ public class MenuPrincipalMapaFragment extends Fragment implements OnMapReadyCal
 
     private Location currentLocation;
     private LocationManager locationManager;
+    private boolean gpsHabilitado;
+
+
+    private static final int REQUEST_IMAGE_CAPTURE=1;
+    private TextView textViewConCOordenadas;
 
     public MenuPrincipalMapaFragment() {
         // Required empty public constructor
@@ -76,13 +72,18 @@ public class MenuPrincipalMapaFragment extends Fragment implements OnMapReadyCal
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d("Mensaje", "onCreateView");
         view=inflater.inflate(R.layout.fragment_menu_principal_mapa, container, false);
+        textViewConCOordenadas=view.findViewById(R.id.textViewMenuPrincipalMapaFragment);
+        textViewConCOordenadas.setText("Vete a la mierda");
         //El locationService lo utilizamos para controlar el PS
-
+        gpsHabilitado=false;
+        comprobrarSiGPSEstaHabilitado();
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Has hecho clocik en el floating button", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Has hecho clocik en el floating button", Toast.LENGTH_SHORT).show();
+                lanzarCamara();
+
             }
         });
         return view;
@@ -240,7 +241,7 @@ public class MenuPrincipalMapaFragment extends Fragment implements OnMapReadyCal
     }
 
 
-    private boolean comprobrarSiGPSEstaHabilitado(){
+    private void comprobrarSiGPSEstaHabilitado(){
         boolean activadoGPS=false;
         boolean activadoNetwork;
         boolean permitido=false;
@@ -257,15 +258,23 @@ public class MenuPrincipalMapaFragment extends Fragment implements OnMapReadyCal
         }*/
         LocationManager lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
         activadoGPS=lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if(activadoGPS) Log.d("Mensaje", "GPS activado");
-        else  Log.d("Mensaje", "GPS no activado");
-        activadoNetwork=lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        if(activadoNetwork) Log.d("Mensaje", "network activado");
-        else  Log.d("Mensaje", "network no activado");
-        if(activadoGPS || activadoNetwork){
-            permitido=true;
+        if(activadoGPS){
+            Log.d("Mensaje", "GPS activado");
         }
-        return permitido;
+        else {
+            Log.d("Mensaje", "GPS no activado");
+        }
+        activadoNetwork=lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if(activadoNetwork){
+            Log.d("Mensaje", "network activado");
+        }
+        else{
+            Log.d("Mensaje", "network no activado");
+        }
+        if(activadoGPS || activadoNetwork){
+            gpsHabilitado=true;
+        }
+        ;
     }
 
 
@@ -317,8 +326,11 @@ public class MenuPrincipalMapaFragment extends Fragment implements OnMapReadyCal
 
     @Override
     public void onLocationChanged(Location location) {
+
         Log.d("Mensaje", "proveedor: "+location.getProvider());
-        Toast.makeText(getContext(), "proveedor "+location.getProvider(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "proveedor "+location.getProvider(), Toast.LENGTH_SHORT).show();
+        textViewConCOordenadas.setText(location.getLatitude()+", "+location.getLongitude());
+        currentLocation=location;
     }
 
     @Override
@@ -328,11 +340,32 @@ public class MenuPrincipalMapaFragment extends Fragment implements OnMapReadyCal
 
     @Override
     public void onProviderEnabled(String provider) {
-
+        gpsHabilitado=true;
     }
 
     @Override
     public void onProviderDisabled(String provider) {
+        gpsHabilitado=false;
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("Mensaje", "Se han recibido datos en MenuPrincipalMapaFragment");
+    }
+
+
+
+    private void lanzarCamara(){
+        if(gpsHabilitado){
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                //Intent intentCrearFotoActivity=new Intent(getContext(), CrearFotoActivity.class);
+                MainActivity.getInstance().setLocation(currentLocation);
+                startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE);
+            }
+        }else{
+            Toast.makeText(getContext(), "GPS no habilitado", Toast.LENGTH_SHORT).show();
+        }
     }
 }
